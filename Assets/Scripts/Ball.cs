@@ -6,6 +6,9 @@ public class Ball : MonoBehaviour
 {
     private Rigidbody rigidBody;
     private AudioSource audioSource;
+    
+    //Ben's Code for nudge buttons
+    //public bool inPlay = false;
 
 	// Use this for initialization
 	void Start ()
@@ -17,9 +20,32 @@ public class Ball : MonoBehaviour
 
     public void Launch(Vector3 velocity)
     {
+        //Ben's Code for nudge buttons
+        //inPlay = true;
         rigidBody.useGravity = true;
         rigidBody.velocity = velocity;
 
         audioSource.Play();
+    }
+
+    public void MoveStart(float xNudge)
+    {
+        //only allow user to nudge ball if it isn't moving
+        if (rigidBody.velocity == Vector3.zero)
+        {
+            var ballRadius = GetComponent<SphereCollider>().radius;
+
+            var nudgeVector = transform.position;
+
+            var floor = GameObject.Find("Floor");
+
+            //get the width of half of the floor and subtract from it the radius of the ball            
+            var xLimit = floor.transform.lossyScale.x/2f - (ballRadius * transform.lossyScale.x);
+
+            //This will keep the sides of the ball from going over the edge of the floor
+            nudgeVector.x = Mathf.Clamp(nudgeVector.x + xNudge, -xLimit, xLimit);
+
+            transform.position = nudgeVector;
+        }
     }
 }
