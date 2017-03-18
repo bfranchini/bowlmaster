@@ -22,7 +22,9 @@ public class Pin : MonoBehaviour
     public bool IsStanding()
     {
         var rotationInEuler = transform.rotation.eulerAngles;
-        var xTilt = Mathf.Abs(rotationInEuler.x);
+
+        //pins have a rotation offset in the x-axis since we took off their child objects.
+        var xTilt = Mathf.Abs(270-rotationInEuler.x);
         var zTilt = Mathf.Abs(rotationInEuler.z);
 
         if (xTilt < standingThreshold && zTilt < standingThreshold)
