@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraControl : MonoBehaviour
 {
     public Ball ball;
-    private Vector3 offset;
+    private Vector3 offset;    
 
 	// Use this for initialization
 	void Start ()
@@ -17,7 +17,9 @@ public class CameraControl : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (transform.position.z <= 1829)        
+        //checking that the ball's transform hasn't gone over 1829(the position of the first pin) 
+        //will allow the camera to follow the ball around when it is reset
+        if (ball.transform.position.z <= 1829)        
             transform.position = ball.transform.position + offset;                
     }
 }

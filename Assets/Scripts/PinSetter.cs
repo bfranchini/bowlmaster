@@ -7,25 +7,63 @@ public class PinSetter : MonoBehaviour
 {
     public Text standingDisplay;
     public Pin[] pins;
-    private bool ballEnteredBox = false;
+    public int lastStandingCount = -1;
+    private bool ballEnteredBox;    
+    private float lastChangeTime;
+    private bool pinsSettled;
+    private Ball ball;
 
     // Use this for initialization
     void Start()
     {
-        pins = GameObject.FindObjectsOfType<Pin>();
+        ball = FindObjectOfType<Ball>();
     }
 
     // Update is called once per frame
     void Update()
-    {
-        standingDisplay.text = CountStanding().ToString();
+    {        
+        if (ballEnteredBox)
+            checkStandingCount();
     }
 
-    public int CountStanding()
+    private void checkStandingCount()
+    {
+        //check the last standing count
+        //call pinsHaveSettled
+        if (!pinsSettled)
+        {
+            var curentStanding = CountStanding();
+
+            if (lastStandingCount != curentStanding)
+            {
+                standingDisplay.text = CountStanding().ToString();
+                lastStandingCount = curentStanding;
+                lastChangeTime = Time.time;
+            }
+
+            float settleTime = 3f;
+
+            if (Time.time - lastChangeTime >= settleTime)
+            {
+                pinsHaveSettled();
+            } 
+        }
+    }
+
+    private void pinsHaveSettled()
+    {
+        ball.Reset();
+        lastStandingCount = -1; //indicates pins have settle, and ball not back in box
+        ballEnteredBox = false;
+        pinsSettled = true;
+        standingDisplay.color = Color.green;
+    }
+
+    private int CountStanding()
     {
         var standingPins = 0;
 
-        foreach (Pin pin in pins)
+        foreach (Pin pin in GameObject.FindObjectsOfType<Pin>())
         {
             if (pin.IsStanding())
                 standingPins++;
