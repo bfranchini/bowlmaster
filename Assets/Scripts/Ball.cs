@@ -23,13 +23,16 @@ public class Ball : MonoBehaviour
 
     public void Launch(Vector3 velocity)
     {
-        //Ben's Code for nudge buttons
-        //inPlay = true;
-        rigidBody.useGravity = true;
-        rigidBody.velocity = velocity;
-        InPlay = true;
+        if (!InPlay)
+        {
+            //Ben's Code for nudge buttons
+            //inPlay = true;
+            rigidBody.useGravity = true;
+            rigidBody.velocity = velocity;
+            InPlay = true;
 
-        audioSource.Play();        
+            audioSource.Play();
+        }        
     }
 
     public void MoveStart(float xNudge)
