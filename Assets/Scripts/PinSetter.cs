@@ -7,8 +7,9 @@ public class PinSetter : MonoBehaviour
 {
     public Text standingDisplay;
     public Pin[] pins;
-    public int lastStandingCount = -1;    
-    private bool ballEnteredBox;    
+    public int lastStandingCount = -1;
+    public GameObject pinSet;
+    private bool ballEnteredBox;
     private float lastChangeTime;
     private bool pinsSettled;
     private Ball ball;
@@ -21,7 +22,7 @@ public class PinSetter : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
+    {
         if (ballEnteredBox)
             checkStandingCount();
     }
@@ -46,7 +47,7 @@ public class PinSetter : MonoBehaviour
             if (Time.time - lastChangeTime >= settleTime)
             {
                 pinsHaveSettled();
-            } 
+            }
         }
     }
 
@@ -89,24 +90,18 @@ public class PinSetter : MonoBehaviour
 
     public void RaisePins()
     {
-        //raise standing pins only by distanceToRaise
-        Debug.Log("Raising Pins");
-
-        foreach (Pin pin in FindObjectsOfType<Pin>())        
+        foreach (Pin pin in FindObjectsOfType<Pin>())
             pin.RaiseIfStanding();
-        
     }
 
     public void LowerPins()
     {
-        Debug.Log("lowering Pins");
-
-        foreach (Pin pin in FindObjectsOfType<Pin>())        
-            pin.Lower();        
+        foreach (Pin pin in FindObjectsOfType<Pin>())
+            pin.Lower();
     }
 
     public void RenewPins()
     {
-        Debug.Log("Renewing Pins");
+        Instantiate(pinSet, new Vector3(0, 20, 1829f), Quaternion.identity);
     }
 }
