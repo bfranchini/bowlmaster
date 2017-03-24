@@ -24,10 +24,10 @@ public class PinSetter : MonoBehaviour
     void Update()
     {
         if (ballEnteredBox)
-            checkStandingCount();
+            updateStandingCountAndSettle();
     }
 
-    private void checkStandingCount()
+    private void updateStandingCountAndSettle()
     {
         //check the last standing count
         //call pinsHaveSettled
@@ -80,12 +80,6 @@ public class PinSetter : MonoBehaviour
             standingDisplay.color = Color.red;
             ballEnteredBox = true;
         }
-    }
-
-    public void OnTriggerExit(Collider col)
-    {
-        if (col.GetComponent<Pin>() != null)
-            Destroy(col.gameObject);
     }
 
     public void RaisePins()

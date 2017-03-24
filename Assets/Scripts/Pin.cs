@@ -50,6 +50,5 @@ public class Pin : MonoBehaviour
     {
         transform.Translate(new Vector3(0, -distanceToRaise, 0), Space.World);
         rigidBody.useGravity = true;
-
     }
 }
