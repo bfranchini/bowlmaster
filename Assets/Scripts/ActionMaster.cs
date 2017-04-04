@@ -12,10 +12,40 @@ public class ActionMaster
 
     public Action Bowl(int pins)
     {
-        if(pins < 0 || pins > 10)
+        //strike bonus: pins this frame + next two rolls
+        //spare bonus: pins this frame + next rolls
+        //both bonuses apply to the tenth frame
+
+        //not strike frame 1 = tidy
+        //not strike frame 2 or spare  = reset(frame 2 is always reset
+        //strike frame 1 = reset
+
+        if (pins < 0 || pins > 10)
             throw new UnityException("Pins are less than 0 or more than 10");
 
-        //other behavior here, e.g. last frame
+        //last frame strike
+        if (bowl == 21 && pins == 10)
+        {
+            bowl++;
+            return Action.Reset;
+        }
+
+        //last frame first bonus strike
+        if (bowl == 22 && pins == 10)
+        {
+            bowl++;
+            return Action.Reset;
+        }
+
+        //last frame second bonus strike
+        if (bowl == 23 && pins == 10)
+        {
+            bowl++;
+            return Action.EndGame;
+        }
+
+        ////last frame spare 
+        //if(bowl == 21 && pins )
 
         if (pins == 10)
         {
