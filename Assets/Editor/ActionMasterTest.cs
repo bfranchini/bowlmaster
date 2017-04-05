@@ -59,21 +59,40 @@ public class ActionMasterTest
     }
 
     [Test]
-    public void T06StrikeOnLastFrameBonus1ReturnsReset()
+    public void T06StrikeOnLastFrameAndOnBonus1ReturnsReset()
     {
-        for (var i = 1; i <= 11; i++)
+        for (var i = 1; i <= 10; i++)
             actionMaster.Bowl(10);
 
         Assert.AreEqual(reset, actionMaster.Bowl(10));
     }
 
     [Test]
-    public void T07StrikeOnLastFrameBonus2ReturnsEndGame()
+    public void T08SpareOnLastFrameAndOnBonus1ReturnsEndGame()
     {
-        for (var i = 1; i <= 12; i++)
+        //bowl up to frame 9 and... 
+        for (var i = 1; i <= 9; i++)
             actionMaster.Bowl(10);
 
+        //get a spare for frame 10
+        actionMaster.Bowl(9);
+        actionMaster.Bowl(1);
+
+        //here we're bowling bonus 1
         Assert.AreEqual(endGame, actionMaster.Bowl(10));
+    }
+
+    [Test]
+    public void T09SecondBonusFrameReturnsEndgame()
+    {
+        for (var i = 1; i <= 10; i++)
+            actionMaster.Bowl(10);
+
+        //bonus 1
+        actionMaster.Bowl(4);
+        
+        //bonus 2
+        Assert.AreEqual(endGame, actionMaster.Bowl(5));
     }
 
 }

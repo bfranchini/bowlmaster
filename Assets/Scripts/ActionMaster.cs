@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ActionMaster
 {
-    //private int[] bowls = new int[21];
+    private int[] bowls = new int[22];
 
     //bowl 1 is the first frame of the game.
     private int bowl = 1;
@@ -20,32 +20,29 @@ public class ActionMaster
         //not strike frame 2 or spare  = reset(frame 2 is always reset
         //strike frame 1 = reset
 
+        bowls[bowl-1] = pins;
+
         if (pins < 0 || pins > 10)
             throw new UnityException("Pins are less than 0 or more than 10");
 
-        //last frame strike
-        if (bowl == 21 && pins == 10)
+        //frame 10 was was strike and we're on bonus frame 1. Do one more bonus
+        if (bowl == 21 && bowls[18] == 10)
         {
             bowl++;
             return Action.Reset;
         }
 
-        //last frame first bonus strike
-        if (bowl == 22 && pins == 10)
+        //frame 10 was was not a strike and we're on bonus frame 1. end game
+        if (bowl == 21 && bowls[18] != 10)
         {
-            bowl++;
-            return Action.Reset;
+            return Action.EndGame;            
         }
 
-        //last frame second bonus strike
-        if (bowl == 23 && pins == 10)
-        {
-            bowl++;
+        //last frame second bonus, end game
+        if (bowl == 22)
+        {            
             return Action.EndGame;
-        }
-
-        ////last frame spare 
-        //if(bowl == 21 && pins )
+        }    
 
         if (pins == 10)
         {
