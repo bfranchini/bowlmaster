@@ -21,12 +21,12 @@ public class ActionMasterTest
     [Test]
     public void T00FailingTest()
     {
-        Assert.AreEqual(1,1);
+        Assert.AreEqual(1, 1);
     }
 
     [Test]
     public void T01OneStrikeReturnsEndTurn()
-    {        
+    {
         Assert.AreEqual(endTurn, actionMaster.Bowl(10));
     }
 
@@ -38,7 +38,7 @@ public class ActionMasterTest
 
     [Test]
     public void T03BowlGutterOnRoll1ReturnsTidy()
-    {     
+    {
         Assert.AreEqual(tidy, actionMaster.Bowl(0));
     }
 
@@ -52,7 +52,7 @@ public class ActionMasterTest
     [Test]
     public void T05StrikeOnLastFrameReturnsReset()
     {
-        for(var i = 1; i<= 18; i++)
+        for (var i = 1; i <= 18; i++)
             actionMaster.Bowl(1);
 
         Assert.AreEqual(reset, actionMaster.Bowl(10));
@@ -86,7 +86,7 @@ public class ActionMasterTest
     }
 
     [Test]
-    public void T11GameEndsAtBowl20()
+    public void T08GameEndsAtBowl20()
     {
         var rolls = new[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
@@ -96,6 +96,34 @@ public class ActionMasterTest
         }
 
         Assert.AreEqual(endGame, actionMaster.Bowl(1));
+    }
+
+    [Test]
+    public void T09StrikeOnBowl19AndNotStrikeOn20ReturnsTidy()
+    {
+        //bowl up to frame 9
+        for (var i = 1; i <= 18; i++)
+            actionMaster.Bowl(1);
+
+        //bowl a strike on frame 10
+        actionMaster.Bowl(10);
+
+        //first bonus didn't knock all the pins. Get tidy
+        Assert.AreEqual(tidy, actionMaster.Bowl(3));
+    }
+
+    [Test]
+    public void T10BensBowl20Test()
+    {
+        //bowl up to frame 9
+        for (var i = 1; i <= 18; i++)
+            actionMaster.Bowl(1);
+
+        //bowl a strike on frame 10
+        actionMaster.Bowl(10);
+
+        //first bonus didn't knock all the pins. Get tidy
+        Assert.AreEqual(tidy, actionMaster.Bowl(0));
     }
 }
 

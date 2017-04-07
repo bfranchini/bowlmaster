@@ -30,7 +30,14 @@ public class ActionMaster
         {
             return Action.EndGame;
         }
-        
+
+        //not a strike on first bonus after getting a strike on bowl 19 (first roll of frame 10)
+        if (bowl == 20 && Bowl21Awarded() && pins < 10 && bowls[19 - 1] == 10)
+        {
+            bowl++;
+            return Action.Tidy;
+        }
+
         //handle last-frame special cases        
         if (bowl >= 19 && Bowl21Awarded())
         {
@@ -42,8 +49,8 @@ public class ActionMaster
         if (bowl == 20 && !Bowl21Awarded())
         {
             return Action.EndGame;
-        }                
-        
+        }
+
         //strike, go to the next odd numbered roll(new frame)
         if (pins == 10)
         {
