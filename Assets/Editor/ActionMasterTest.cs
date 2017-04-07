@@ -37,7 +37,7 @@ public class ActionMasterTest
     }
 
     [Test]
-    public void T03BowlGutterReturnsTidy()
+    public void T03BowlGutterOnRoll1ReturnsTidy()
     {     
         Assert.AreEqual(tidy, actionMaster.Bowl(0));
     }
@@ -52,48 +52,50 @@ public class ActionMasterTest
     [Test]
     public void T05StrikeOnLastFrameReturnsReset()
     {
-        for(var i = 1; i<= 10; i++)
-            actionMaster.Bowl(10);
+        for(var i = 1; i<= 18; i++)
+            actionMaster.Bowl(1);
 
         Assert.AreEqual(reset, actionMaster.Bowl(10));
     }
 
     [Test]
-    public void T06StrikeOnLastFrameAndOnBonus1ReturnsReset()
-    {
-        for (var i = 1; i <= 10; i++)
-            actionMaster.Bowl(10);
-
-        Assert.AreEqual(reset, actionMaster.Bowl(10));
-    }
-
-    [Test]
-    public void T08SpareOnLastFrameAndOnBonus1ReturnsEndGame()
+    public void T06CheckResetAtSpareInLastFrame()
     {
         //bowl up to frame 9 and... 
-        for (var i = 1; i <= 9; i++)
-            actionMaster.Bowl(10);
+        for (var i = 1; i <= 18; i++)
+            actionMaster.Bowl(1);
 
         //get a spare for frame 10
         actionMaster.Bowl(9);
-        actionMaster.Bowl(1);
 
         //here we're bowling bonus 1
-        Assert.AreEqual(endGame, actionMaster.Bowl(10));
+        Assert.AreEqual(reset, actionMaster.Bowl(1));
     }
 
     [Test]
-    public void T09SecondBonusFrameReturnsEndgame()
+    public void T07YouTubeRollsEndInEndgame()
     {
-        for (var i = 1; i <= 10; i++)
-            actionMaster.Bowl(10);
+        var rolls = new[] { 8, 2, 7, 3, 3, 4, 10, 2, 8, 10, 10, 8, 0, 10, 8, 2 };
 
-        //bonus 1
-        actionMaster.Bowl(4);
-        
-        //bonus 2
-        Assert.AreEqual(endGame, actionMaster.Bowl(5));
+        foreach (int roll in rolls)
+        {
+            actionMaster.Bowl(roll);
+        }
+
+        Assert.AreEqual(endGame, actionMaster.Bowl(9));
     }
 
+    [Test]
+    public void T11GameEndsAtBowl20()
+    {
+        var rolls = new[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+
+        foreach (var roll in rolls)
+        {
+            actionMaster.Bowl(roll);
+        }
+
+        Assert.AreEqual(endGame, actionMaster.Bowl(1));
+    }
 }
 
