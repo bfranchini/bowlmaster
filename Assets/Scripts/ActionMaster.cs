@@ -49,23 +49,26 @@ public class ActionMaster
         if (bowl == 20 && !Bowl21Awarded())
         {
             return Action.EndGame;
-        }
-
-        //strike, go to the next odd numbered roll(new frame)
-        if (pins == 10)
-        {
-            bowl += 2;
-            return Action.EndTurn;            
-        }
+        }               
           
-        //mid frame or last frame(frame is odd)
+        //first bowl of frame
         if (bowl % 2 != 0)
         {
-            bowl++;
-            return Action.Tidy;
+            //strike, go to the next odd numbered roll(new frame)
+            if (pins == 10)
+            {
+                bowl += 2;
+                return Action.EndTurn;
+            }
+
+            //not a stike. go to next bowl
+            {
+                bowl++;
+                return Action.Tidy;
+            }
         }
 
-        //end of frame(frame is even)
+        //second bowl of frame always increments by one
         if (bowl % 2 == 0)
         {
             bowl++;
@@ -79,5 +82,10 @@ public class ActionMaster
     {
         //Remember that arrays start counting at 0
         return (bowls[19 - 1] + bowls[20 - 1] >= 10);
+    }
+
+    public int GetCurrentBowl()
+    {
+        return bowl;
     }
 }

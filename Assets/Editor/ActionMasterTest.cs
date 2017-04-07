@@ -125,5 +125,27 @@ public class ActionMasterTest
         //first bonus didn't knock all the pins. Get tidy
         Assert.AreEqual(tidy, actionMaster.Bowl(0));
     }
+
+    [Test]
+    public void T11ZeroTenSpareReturnsEndTurnAndOddFrame()
+    {
+        actionMaster.Bowl(0);
+        
+        Assert.AreEqual(endTurn, actionMaster.Bowl(10));
+        Assert.AreEqual(1, actionMaster.GetCurrentBowl() % 2);
+    }
+
+    [Test]
+    public void T12Dondi10thFrameTurkey()
+    {
+        int[] rolls = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+        foreach (int roll in rolls)
+        {
+            actionMaster.Bowl(roll);
+        }
+        Assert.AreEqual(reset, actionMaster.Bowl(10));
+        Assert.AreEqual(reset, actionMaster.Bowl(10));
+        Assert.AreEqual(endGame, actionMaster.Bowl(10));
+    }
 }
 
