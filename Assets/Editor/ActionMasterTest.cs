@@ -147,5 +147,12 @@ public class ActionMasterTest
         Assert.AreEqual(reset, actionMaster.Bowl(10));
         Assert.AreEqual(endGame, actionMaster.Bowl(10));
     }
+
+    [Test]
+    public void T13ZeroOnegivesEndTurn()
+    {
+        actionMaster.Bowl(0);
+        Assert.AreEqual(endTurn, actionMaster.Bowl(1));
+    }
 }
 
