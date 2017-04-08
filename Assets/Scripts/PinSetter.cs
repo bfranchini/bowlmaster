@@ -111,7 +111,10 @@ public class PinSetter : MonoBehaviour
     public void RaisePins()
     {
         foreach (Pin pin in FindObjectsOfType<Pin>())
+        {
             pin.RaiseIfStanding();
+            pin.transform.rotation = Quaternion.Euler(new Vector3(270f, 0, 0));
+        }            
     }
 
     public void LowerPins()

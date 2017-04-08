@@ -25,8 +25,6 @@ public class Ball : MonoBehaviour
     {
         if (!InPlay)
         {
-            //Ben's Code for nudge buttons
-            //inPlay = true;
             rigidBody.useGravity = true;
             rigidBody.velocity = velocity;
             InPlay = true;
@@ -61,6 +59,7 @@ public class Ball : MonoBehaviour
         transform.position = initialPos;
         rigidBody.velocity = Vector3.zero;
         rigidBody.angularVelocity = Vector3.zero;
+        rigidBody.rotation = Quaternion.identity;       
         rigidBody.useGravity = false;
         InPlay = false;
     }

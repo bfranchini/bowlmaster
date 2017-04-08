@@ -38,7 +38,7 @@ public class Pin : MonoBehaviour
     public void RaiseIfStanding()
     {
         if (IsStanding())
-        {
+        {            
             //we need the Spance.World parameter because we're moving the object relative to world space
             transform.Translate(new Vector3(0, distanceToRaise, 0), Space.World);
 
