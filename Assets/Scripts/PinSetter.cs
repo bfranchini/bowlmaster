@@ -12,12 +12,16 @@ public class PinSetter : MonoBehaviour
     private bool ballEnteredBox;
     private float lastChangeTime;
     private bool pinsSettled;
+    private int lastSettledCount = 10;
     private Ball ball;
+    private readonly ActionMaster actionMaster = new ActionMaster();
+    private Animator animator;
 
     // Use this for initialization
     void Start()
     {
         ball = FindObjectOfType<Ball>();
+        animator = FindObjectOfType<Animator>();
     }
 
     // Update is called once per frame
@@ -30,34 +34,59 @@ public class PinSetter : MonoBehaviour
     private void updateStandingCountAndSettle()
     {
         //check the last standing count
-        //call pinsHaveSettled
+        //call pinsHaveSettled     
         if (!pinsSettled)
         {
-            var curentStanding = CountStanding();
+            var currentStanding = CountStanding();
 
-            if (lastStandingCount != curentStanding)
+            if (lastStandingCount != currentStanding)
             {
                 standingDisplay.text = CountStanding().ToString();
-                lastStandingCount = curentStanding;
+                lastStandingCount = currentStanding;
                 lastChangeTime = Time.time;
             }
 
-            float settleTime = 3f;
+            float settleTime = 3f;           
 
             if (Time.time - lastChangeTime >= settleTime)
-            {
                 pinsHaveSettled();
-            }
         }
     }
 
     private void pinsHaveSettled()
-    {
+    {        
+        int standing = CountStanding();
+        var pinFall = lastSettledCount - standing;
+        lastSettledCount = CountStanding();
+        animateSwiper(actionMaster.Bowl(pinFall)); 
+        Debug.Log("Pinfall: " + pinFall);      
+
         ball.Reset();
-        lastStandingCount = -1; //indicates pins have settle, and ball not back in box
+        lastStandingCount = -1; //indicates pins have settled, and ball not back in box
         ballEnteredBox = false;
         pinsSettled = true;
         standingDisplay.color = Color.green;
+    }
+
+    private void animateSwiper(ActionMaster.Action action)
+    {
+        Debug.Log("Action: " + action);
+        switch (action)
+        {
+            case ActionMaster.Action.Tidy:
+                animator.SetTrigger("tidyTrigger");
+                break;
+            case ActionMaster.Action.Reset:
+                animator.SetTrigger("resetTrigger");
+                lastSettledCount = 10;
+                break;
+            case ActionMaster.Action.EndTurn:
+                animator.SetTrigger("resetTrigger");
+                lastSettledCount = 10;
+                break;
+            case ActionMaster.Action.EndGame:
+                throw new UnityException("don't know how to end game yet");
+        }
     }
 
     private int CountStanding()
@@ -79,6 +108,7 @@ public class PinSetter : MonoBehaviour
         {
             standingDisplay.color = Color.red;
             ballEnteredBox = true;
+            pinsSettled = false;
         }
     }
 
