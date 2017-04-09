@@ -41,8 +41,8 @@ public class Pin : MonoBehaviour
         {            
             //we need the Spance.World parameter because we're moving the object relative to world space
             transform.Translate(new Vector3(0, distanceToRaise, 0), Space.World);
-
             rigidBody.useGravity = false;
+            transform.rotation = Quaternion.Euler(new Vector3(270f, 0, 0));
         }
     }
 

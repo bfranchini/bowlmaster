@@ -22,7 +22,7 @@ public class ActionMaster
     }
 
     //TODO: make private
-    public Action Bowl(int pins)
+    private Action Bowl(int pins)
     {
         //strike bonus: pins this frame + next two rolls
         //spare bonus: pins this frame + next rolls
@@ -94,10 +94,5 @@ public class ActionMaster
     {
         //Remember that arrays start counting at 0
         return (bowls[19 - 1] + bowls[20 - 1] >= 10);
-    }
-
-    public int GetCurrentBowl()
-    {
-        return bowl;
-    }    
+    } 
 }
