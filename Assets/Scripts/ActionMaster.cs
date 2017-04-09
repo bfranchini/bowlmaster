@@ -10,6 +10,18 @@ public class ActionMaster
     private int bowl = 1;
     public enum Action { Tidy, Reset, EndTurn, EndGame }
 
+    public static Action NextAction(List<int> pinFalls)
+    {
+        var actionMaster = new ActionMaster();
+        var nextAction = new Action();
+
+        foreach (var pinFall in pinFalls)
+            nextAction = actionMaster.Bowl(pinFall);
+
+        return nextAction;
+    }
+
+    //TODO: make private
     public Action Bowl(int pins)
     {
         //strike bonus: pins this frame + next two rolls
@@ -87,5 +99,5 @@ public class ActionMaster
     public int GetCurrentBowl()
     {
         return bowl;
-    }
+    }    
 }
