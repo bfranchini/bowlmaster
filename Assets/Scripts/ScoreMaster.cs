@@ -47,7 +47,7 @@ public class ScoreMaster
             }
 
             //regular frame
-            if (currentRoll != 10 && nextRoll != 10 && currentRoll + nextRoll != 10 && frameList.Count < 10)
+            if (frameList.Count < 10)
             {
                 frameList.Add(currentRoll + nextRoll);
                 i++;
