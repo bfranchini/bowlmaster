@@ -25,41 +25,48 @@ public class ScoreMaster
     {
         var frameList = new List<int>();
 
-        //var currentRoll = 0;
-        //var previousroll = 0;
-        var frameRoll1 = false;
-        var frameRoll2 = false;
-        var currentFrameScore = 0;
+        //only go up to the second to last roll since going to the last one would 
+        //result in an index out of range operation
+        for (int i = 0; i < rolls.Count - 1; i++)
+        {            
+            var currentRoll = rolls[i];
+            var nextRoll = rolls[i + 1];
+            int bonusRoll;
 
-        foreach (var roll in rolls)
-        {
-            if (!frameRoll1)
+            //strike
+            if (currentRoll == 10 || nextRoll == 10)
             {
-                currentFrameScore += roll;
-                frameRoll1 = true;
-            }                               
-            else if (!frameRoll2)
-            {
-                currentFrameScore += roll;
-                frameRoll2 = true;
+                //there aren't enough rolls to score this strike frame
+                if (i + 2 == rolls.Count)
+                    return frameList;
+
+                bonusRoll = rolls[i + 2];
+
+                frameList.Add(currentRoll + nextRoll + bonusRoll);
+                continue;                
             }
 
-            if (frameRoll1 && frameRoll2)
+            //spare
+            if (currentRoll + nextRoll == 10)
             {
-                frameList.Add(currentFrameScore);
-                frameRoll1 = frameRoll2 = false;
-                currentFrameScore = 0;
-            }              
+                //there arent' enough rolls to score this spare frame
+                if (i + 2 == rolls.Count)
+                    return frameList;
+
+                bonusRoll = rolls[i + 2];
+
+                frameList.Add(currentRoll + nextRoll + bonusRoll);
+                i ++;
+                continue;
+            }
+
+            //regular frame
+            if (currentRoll != 10 && nextRoll != 10 && currentRoll + nextRoll != 10 && frameList.Count < 10)
+            {
+                frameList.Add(currentRoll + nextRoll);
+                i++;                
+            }
         }
-
-        //for (int i = 0; i < rolls.Count; i++)
-        //{
-        //    if (i + 1 == rolls.Count)
-        //        return frameList;
-
-        //    if(rolls[i] + rolls[i +1 ] != 10)
-        //        frameList.Add(rolls[i] + rolls[i + 1]);
-        //}       
 
         return frameList;
     }
