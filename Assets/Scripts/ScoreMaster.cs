@@ -28,35 +28,36 @@ public class ScoreMaster
         //only go up to the second to last roll since going to the last one would 
         //result in an index out of range operation
         for (int i = 0; i < rolls.Count - 1; i++)
-        {            
+        {
             var currentRoll = rolls[i];
             var nextRoll = rolls[i + 1];
+            var strike = currentRoll == 10 || nextRoll == 10;
+            var spare = currentRoll + nextRoll == 10;
 
-            //strike or spare
-            if (currentRoll == 10 || nextRoll == 10 || currentRoll + nextRoll == 10)
+            if (strike || spare)
             {
                 if (!calculatedBonus(i, rolls, frameList, currentRoll, nextRoll))
                     return frameList;
 
                 //only skip a roll if we got a spare
-                if (currentRoll != 10 && nextRoll != 10 && currentRoll + nextRoll == 10)
+                if (!strike)
                     i++;
 
-                continue;                
+                continue;
             }
 
             //regular frame
             if (currentRoll != 10 && nextRoll != 10 && currentRoll + nextRoll != 10 && frameList.Count < 10)
             {
                 frameList.Add(currentRoll + nextRoll);
-                i++;                
+                i++;
             }
         }
 
         return frameList;
     }
 
-    private static bool calculatedBonus(int i, List<int> rolls, List<int>frameList, int currentRoll, int nextRoll)
+    private static bool calculatedBonus(int i, List<int> rolls, List<int> frameList, int currentRoll, int nextRoll)
     {
         //there aren't enough rolls to score frame with bonus
         if (i + 2 == rolls.Count)
