@@ -31,33 +31,18 @@ public class ScoreMaster
         {            
             var currentRoll = rolls[i];
             var nextRoll = rolls[i + 1];
-            int bonusRoll;
 
-            //strike
-            if (currentRoll == 10 || nextRoll == 10)
+            //strike or spare
+            if (currentRoll == 10 || nextRoll == 10 || currentRoll + nextRoll == 10)
             {
-                //there aren't enough rolls to score this strike frame
-                if (i + 2 == rolls.Count)
+                if (!calculatedBonus(i, rolls, frameList, currentRoll, nextRoll))
                     return frameList;
 
-                bonusRoll = rolls[i + 2];
+                //only skip a roll if we got a spare
+                if (currentRoll != 10 && nextRoll != 10 && currentRoll + nextRoll == 10)
+                    i++;
 
-                frameList.Add(currentRoll + nextRoll + bonusRoll);
                 continue;                
-            }
-
-            //spare
-            if (currentRoll + nextRoll == 10)
-            {
-                //there arent' enough rolls to score this spare frame
-                if (i + 2 == rolls.Count)
-                    return frameList;
-
-                bonusRoll = rolls[i + 2];
-
-                frameList.Add(currentRoll + nextRoll + bonusRoll);
-                i ++;
-                continue;
             }
 
             //regular frame
@@ -69,5 +54,17 @@ public class ScoreMaster
         }
 
         return frameList;
+    }
+
+    private static bool calculatedBonus(int i, List<int> rolls, List<int>frameList, int currentRoll, int nextRoll)
+    {
+        //there aren't enough rolls to score frame with bonus
+        if (i + 2 == rolls.Count)
+            return false;
+
+        var bonusRoll = rolls[i + 2];
+
+        frameList.Add(currentRoll + nextRoll + bonusRoll);
+        return true;
     }
 }
