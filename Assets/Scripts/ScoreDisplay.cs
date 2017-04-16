@@ -8,15 +8,31 @@ public class ScoreDisplay : MonoBehaviour {
 
     public Text[] RollTexts, FrameTexts;
 
-    void Start()
+    //populates individual roll score on score display
+    public void FillRolls(List<int> rolls)
     {
-        RollTexts[0].text = "x";
-        FrameTexts[0].text = "0";
+        var scoreString = FormatRolls(rolls);
+
+        for (int i = 0; i < scoreString.Length; i++)
+        {
+            RollTexts[i].text = scoreString[i].ToString();
+        }
     }
 
-    public void FillRollCard(List<int> rolls)
+    //populates cumulative frame score on display
+    public void FillFrames(List<int> frames)
     {
-        var test = rolls[-1];
+        for (int i = 0; i < frames.Count; i++)
+        {
+            FrameTexts[i].text = frames[i].ToString();
+        }
+    }
+
+    public static string FormatRolls(List<int> rolls)
+    {
+        var output = string.Empty;
+        //your code here
+        return output;        
     }
 }
 

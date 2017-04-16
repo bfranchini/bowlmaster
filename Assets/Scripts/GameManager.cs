@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {        
-    private List<int>bowls = new List<int>();
+    private List<int>rolls = new List<int>();
     private Ball ball;
     private PinSetter pinSetter;
     private ScoreDisplay scoreDisplay;
@@ -23,8 +23,8 @@ public class GameManager : MonoBehaviour
     {
         try
         {
-            bowls.Add(pinFall);
-            pinSetter.performAction(ActionMaster.NextAction(bowls));
+            rolls.Add(pinFall);
+            pinSetter.performAction(ActionMaster.NextAction(rolls));
             
             ball.Reset();
         }
@@ -35,11 +35,12 @@ public class GameManager : MonoBehaviour
 
         try
         {
-            scoreDisplay.FillRollCard(bowls);
+            scoreDisplay.FillRolls(rolls);
+            scoreDisplay.FillFrames(ScoreMaster.ScoreCumulative(rolls));
         }
         catch (Exception)
         {
-            Debug.LogWarning("Something went wrong in FillRollCard");            
+            Debug.LogWarning("Something went wrong in FillRolls");            
         }
     } 
 }
