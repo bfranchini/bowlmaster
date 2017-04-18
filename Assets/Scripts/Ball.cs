@@ -63,4 +63,11 @@ public class Ball : MonoBehaviour
         rigidBody.useGravity = false;
         InPlay = false;
     }
+
+    public void Strike()
+    {
+        rigidBody.velocity = new Vector3(0,0, 600f);
+        rigidBody.useGravity = true;
+        InPlay = true;
+    }
 }

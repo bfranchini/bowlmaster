@@ -13,10 +13,25 @@ public class ScoreDisplay : MonoBehaviour {
     {
         var scoreString = FormatRolls(rolls);
 
-        for (int i = 0; i < scoreString.Length; i++)
+        for (var i = 0; i < rolls.Count; i++)
         {
-            RollTexts[i].text = scoreString[i].ToString();
+            if (rolls[i] == 10)
+            {
+                RollTexts[i].text = scoreString[i].ToString() + scoreString[i + 1];
+                i++;
+            }                           
+            else
+            {
+                RollTexts[i].text = scoreString[i].ToString();
+            }
         }
+
+        //for (int i = 0; i < scoreString.Length; i++)
+        //{
+        //    if()
+
+        //    RollTexts[i].text = scoreString[i].ToString();
+        //}
     }
 
     //populates cumulative frame score on display
@@ -31,7 +46,12 @@ public class ScoreDisplay : MonoBehaviour {
     public static string FormatRolls(List<int> rolls)
     {
         var output = string.Empty;
-        //your code here
+
+        foreach (int roll in rolls)
+        {
+            output += roll.ToString();
+        }
+
         return output;        
     }
 }
