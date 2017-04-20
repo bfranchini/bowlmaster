@@ -42,7 +42,7 @@ public class ScoreDisplayTest
     public void T04BowlSpare55()
     {
         var rolls = new[] { 5, 5 };
-        var rollString = "55";
+        var rollString = "5/";
         Assert.AreEqual(rollString, ScoreDisplay.FormatRolls(rolls.ToList()));
     }
 
@@ -50,7 +50,7 @@ public class ScoreDisplayTest
     public void T05BowlSpare55Then43()
     {
         var rolls = new[] { 5, 5, 4, 3 };
-        var rollString = "5543";
+        var rollString = "5/43";
         Assert.AreEqual(rollString, ScoreDisplay.FormatRolls(rolls.ToList()));
     }
 
@@ -58,7 +58,7 @@ public class ScoreDisplayTest
     public void T06BowlTwoSpares()
     {
         var rolls = new[] { 5, 5, 2, 8 };
-        var rollString = "5528";
+        var rollString = "5/2/";
         Assert.AreEqual(rollString, ScoreDisplay.FormatRolls(rolls.ToList()));
     }
 
@@ -66,7 +66,7 @@ public class ScoreDisplayTest
     public void T07BowlSparesNormalSpare()
     {
         var rolls = new[] { 1, 9, 6, 2, 2, 8 };
-        var rollString = "196228";
+        var rollString = "1/622/";
         Assert.AreEqual(rollString, ScoreDisplay.FormatRolls(rolls.ToList()));
     }
 
@@ -74,7 +74,7 @@ public class ScoreDisplayTest
     public void T08BowlStrike()
     {
         var rolls = new[] { 10 };
-        var rollString = "10";
+        var rollString = "X ";//remember the space
         Assert.AreEqual(rollString, ScoreDisplay.FormatRolls(rolls.ToList()));
     }
 
@@ -82,15 +82,15 @@ public class ScoreDisplayTest
     public void T09BowlStrikeThenNormal()
     {
         var rolls = new[] { 10, 3, 4 };
-        var rollString = "1034";
+        var rollString = "X 34";
         Assert.AreEqual(rollString, ScoreDisplay.FormatRolls(rolls.ToList()));
-    }
+    }  
 
     [Test]
     public void T10BowlPerfectGame()
     {
-        var rolls = new[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 };
-        var rollString = "10101010101010101010101010";
+        var rolls = new[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 };
+        var rollString = "X X X X X X X X X XXX";
         Assert.AreEqual(rollString, ScoreDisplay.FormatRolls(rolls.ToList()));
     }
 
@@ -98,67 +98,89 @@ public class ScoreDisplayTest
     public void T11BowlAllGutters()
     {
         var rolls = new[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        var rollString = "00000000000000000000";
+        var rollString = "--------------------";
         Assert.AreEqual(rollString, ScoreDisplay.FormatRolls(rolls.ToList()));
     }
 
-    //// http://slocums.homestead.com/gamescore.html
     [Test]
-    [Category("Verification")]
-    public void TG02GoldenCopyA()
+    public void T12Bowl19()
     {
-        var rolls = new[] { 10, 7, 3, 9, 0, 10, 0, 8, 8, 2, 0, 6, 10, 10, 10, 8, 1 };
-        var rollString = "1073901008820610101081";
+        var rolls = new[] { 1, 9 };
+        var rollString = "1/";
         Assert.AreEqual(rollString, ScoreDisplay.FormatRolls(rolls.ToList()));
     }
 
-    ////http://guttertoglory.com/wp-content/uploads/2011/11/score-2011_11_28.png
     [Test]
-    [Category("Verification")]
-    public void TG03GoldenCopyB1of3()
+    public void T13BowlSpareInLastFrame()
     {
-        int[] rolls = {10, 9, 1, 9, 1, 9, 1, 9, 1, 7, 0, 9, 0, 10, 8, 2, 8, 2, 10};
-        var rollString = "1091919191709010828210";
+        var rolls = new[] { 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,1, 1,9,3 };
+        var rollString = "1111111111111111111/3";
         Assert.AreEqual(rollString, ScoreDisplay.FormatRolls(rolls.ToList()));
     }
 
-    ////http://guttertoglory.com/wp-content/uploads/2011/11/score-2011_11_28.png
     [Test]
+    public void T14BowlStrikeInLastFrame()
+    {
+        var rolls = new[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 10, 1, 1 };
+        var rollString = "111111111111111111X11";
+        Assert.AreEqual(rollString, ScoreDisplay.FormatRolls(rolls.ToList()));
+    }
+
+    [Test]
+    public void T15BowlZero()
+    {
+        var rolls = new[] {0};
+        var rollString = "-";
+        Assert.AreEqual(rollString, ScoreDisplay.FormatRolls(rolls.ToList()));
+    }
+
+    //http://guttertoglory.com/wp-content/uploads/2011/11/score-2011_11_28.png
     [Category("Verification")]
-    public void TG03GoldenCopyB2of3()
+    [Test]
+    public void TG01GoldenCopyB1of3()
+    {
+        int[] rolls = { 10, 9, 1, 9, 1, 9, 1, 9, 1, 7, 0, 9, 0, 10, 8, 2, 8, 2, 10 };
+        string rollsString = "X 9/9/9/9/7-9-X 8/8/X";
+        Assert.AreEqual(rollsString, ScoreDisplay.FormatRolls(rolls.ToList()));
+    }
+
+    //http://guttertoglory.com/wp-content/uploads/2011/11/score-2011_11_28.png
+    [Category("Verification")]
+    [Test]
+    public void TG02GoldenCopyB2of3()
     {
         int[] rolls = { 8, 2, 8, 1, 9, 1, 7, 1, 8, 2, 9, 1, 9, 1, 10, 10, 7, 1 };
-        var rollString = "82819171829191101071";
-        Assert.AreEqual(rollString, ScoreDisplay.FormatRolls(rolls.ToList()));
+        string rollsString = "8/819/718/9/9/X X 71";
+        Assert.AreEqual(rollsString, ScoreDisplay.FormatRolls(rolls.ToList()));
     }
 
-    ////http://guttertoglory.com/wp-content/uploads/2011/11/score-2011_11_28.png
-    [Test]
+    //http://guttertoglory.com/wp-content/uploads/2011/11/score-2011_11_28.png
     [Category("Verification")]
+    [Test]
     public void TG03GoldenCopyB3of3()
     {
         int[] rolls = { 10, 10, 9, 0, 10, 7, 3, 10, 8, 1, 6, 3, 6, 2, 9, 1, 10 };
-        var rollString = "1010901073108163629110";
-        Assert.AreEqual(rollString, ScoreDisplay.FormatRolls(rolls.ToList()));
+        string rollsString = "X X 9-X 7/X 8163629/X";
+        Assert.AreEqual(rollsString, ScoreDisplay.FormatRolls(rolls.ToList()));
     }
 
-    //// http://brownswick.com/wp-content/uploads/2012/06/OpenBowlingScores-6-12-12.jpg
-    [Test]
+    // http://brownswick.com/wp-content/uploads/2012/06/OpenBowlingScores-6-12-12.jpg
     [Category("Verification")]
-    public void TG03GoldenCopyC1of3()
+    [Test]
+    public void TG04GoldenCopyC1of3()
     {
         int[] rolls = { 7, 2, 10, 10, 10, 10, 7, 3, 10, 10, 9, 1, 10, 10, 9 };
-        var rollString = "72101010107310109110109";
-        Assert.AreEqual(rollString, ScoreDisplay.FormatRolls(rolls.ToList()));
+        string rollsString = "72X X X X 7/X X 9/XX9";
+        Assert.AreEqual(rollsString, ScoreDisplay.FormatRolls(rolls.ToList()));
     }
 
-    //// http://brownswick.com/wp-content/uploads/2012/06/OpenBowlingScores-6-12-12.jpg
-    [Test]
+    // http://brownswick.com/wp-content/uploads/2012/06/OpenBowlingScores-6-12-12.jpg
     [Category("Verification")]
-    public void TG03GoldenCopyC2of3()
+    [Test]
+    public void TG05GoldenCopyC2of3()
     {
         int[] rolls = { 10, 10, 10, 10, 9, 0, 10, 10, 10, 10, 10, 9, 1 };
-        var rollString = "1010101090101010101091";
-        Assert.AreEqual(rollString, ScoreDisplay.FormatRolls(rolls.ToList()));
+        string rollsString = "X X X X 9-X X X X X91";
+        Assert.AreEqual(rollsString, ScoreDisplay.FormatRolls(rolls.ToList()));
     }
 }
