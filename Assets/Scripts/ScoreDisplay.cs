@@ -56,8 +56,8 @@ public class ScoreDisplay : MonoBehaviour
             //always enter 0 as -
             if (rolls[i] == 0)
                 output += "-";
-            //spare anywhere
-            else if (box % 2 == 0 && rolls[i - 1] + rolls[i] == 10)
+            //spare anywhere or on frame 21
+            else if ((box % 2 == 0 || box == 21 )&& rolls[i - 1] + rolls[i] == 10)
                 output += "/";
 
             //strike in frame 10

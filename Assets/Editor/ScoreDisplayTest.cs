@@ -134,6 +134,15 @@ public class ScoreDisplayTest
         Assert.AreEqual(rollString, ScoreDisplay.FormatRolls(rolls.ToList()));
     }
 
+    [Test]
+    public void T16BowlZeroTen()
+    {
+        var rolls = new[] { 0,10 };
+        var rollString = "-/";
+        Assert.AreEqual(rollString, ScoreDisplay.FormatRolls(rolls.ToList()));
+    }
+
+
     //http://guttertoglory.com/wp-content/uploads/2011/11/score-2011_11_28.png
     [Category("Verification")]
     [Test]
@@ -180,7 +189,7 @@ public class ScoreDisplayTest
     public void TG05GoldenCopyC2of3()
     {
         int[] rolls = { 10, 10, 10, 10, 9, 0, 10, 10, 10, 10, 10, 9, 1 };
-        string rollsString = "X X X X 9-X X X X X91";
+        string rollsString = "X X X X 9-X X X X X9/";
         Assert.AreEqual(rollsString, ScoreDisplay.FormatRolls(rolls.ToList()));
     }
 }
