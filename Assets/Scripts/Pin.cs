@@ -8,11 +8,13 @@ public class Pin : MonoBehaviour
     public float standingThreshold;
     public float distanceToRaise = 60f;
     private Rigidbody rigidBody;
+    private AudioSource audioSource;
 
     // Use this for initialization
     void Start()
     {
         rigidBody = transform.GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -50,5 +52,14 @@ public class Pin : MonoBehaviour
     {
         transform.Translate(new Vector3(0, -distanceToRaise, 0), Space.World);
         rigidBody.useGravity = true;
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<Ball>() != null ||
+            collision.gameObject.GetComponent<Pin>() != null)
+        {
+            audioSource.Play();
+        }
     }
 }
