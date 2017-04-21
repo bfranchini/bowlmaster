@@ -51,13 +51,14 @@ public class ScoreDisplay : MonoBehaviour
         for (var i = 0; i < rolls.Count; i++)
         {
             //score box 1 to 21
-            var box = output.Length + 1; 
+            var box = output.Length + 1;
 
             //always enter 0 as -
             if (rolls[i] == 0)
                 output += "-";
             //spare anywhere or on frame 21
-            else if ((box % 2 == 0 || box == 21 )&& rolls[i - 1] + rolls[i] == 10)
+            else if ((box % 2 == 0 || box == 21) && rolls[i - 1] + rolls[i] == 10 &&
+                output[output.Length - 1].ToString() != "/")
                 output += "/";
 
             //strike in frame 10

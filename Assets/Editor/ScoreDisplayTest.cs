@@ -142,6 +142,14 @@ public class ScoreDisplayTest
         Assert.AreEqual(rollString, ScoreDisplay.FormatRolls(rolls.ToList()));
     }
 
+    [Test]
+    public void T18LastFrame3_7_3()
+    {
+        int[] rolls = { 10, 10, 10, 10, 10, 10, 10, 10, 10, 3, 7, 3 };
+        string rollsString = "X X X X X X X X X 3/3";
+        Assert.AreEqual(rollsString, ScoreDisplay.FormatRolls(rolls.ToList()));
+    }
+
 
     //http://guttertoglory.com/wp-content/uploads/2011/11/score-2011_11_28.png
     [Category("Verification")]
