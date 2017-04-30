@@ -8,6 +8,7 @@ public class Ball : MonoBehaviour
     private AudioSource audioSource;
     private Vector3 initialPos;
     public bool InPlay;
+    public float secondsInPlay;
     
     //Ben's Code for nudge buttons
     //public bool inPlay = false;
@@ -20,6 +21,14 @@ public class Ball : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 	    rigidBody.useGravity = false;
 	}
+
+    void Update()
+    {
+        if (InPlay)        
+            secondsInPlay += Time.deltaTime;
+        else        
+            secondsInPlay = 0f;
+    }
 
     public void Launch(Vector3 velocity)
     {

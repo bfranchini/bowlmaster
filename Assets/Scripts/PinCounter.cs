@@ -7,21 +7,24 @@ public class PinCounter : MonoBehaviour {
     public Text standingDisplay;
     public bool ballOutOfPlay = false;
     private int lastSettledCount = 10;
+    private float maxSecondsInPlay = 30f;
     private int lastStandingCount = -1;
     private float lastChangeTime;
     private GameManager gameManager;
+    private Ball ball;
     
     // Use this for initialization
     void Start ()
     {
         gameManager = FindObjectOfType<GameManager>();
+        ball = FindObjectOfType<Ball>();
     }
 	
 	// Update is called once per frame
 	void Update () {
         standingDisplay.text = CountStanding().ToString();
 
-        if (ballOutOfPlay)
+        if (ballOutOfPlay || ball.InPlay && ball.secondsInPlay >= maxSecondsInPlay)
         {
             updateStandingCountAndSettle();
             standingDisplay.color = Color.red;
