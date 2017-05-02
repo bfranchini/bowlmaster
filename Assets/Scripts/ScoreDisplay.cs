@@ -26,13 +26,6 @@ public class ScoreDisplay : MonoBehaviour
                 RollTexts[i].text = scoreString[i].ToString();
             }
         }
-
-        //for (int i = 0; i < scoreString.Length; i++)
-        //{
-        //    if()
-
-        //    RollTexts[i].text = scoreString[i].ToString();
-        //}
     }
 
     //populates cumulative frame score on display
