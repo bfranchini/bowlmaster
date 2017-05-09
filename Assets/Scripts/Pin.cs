@@ -17,6 +17,11 @@ public class Pin : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    void Awake()
+    {
+        this.GetComponent<Rigidbody>().solverVelocityIterations = 10;
+    }
+
     // Update is called once per frame
     void Update()
     {
