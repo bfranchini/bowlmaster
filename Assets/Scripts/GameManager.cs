@@ -5,8 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
-{        
-    private List<int>rolls = new List<int>();
+{
+    private List<int> rolls = new List<int>();
     private Ball ball;
     private PinSetter pinSetter;
     private ScoreDisplay scoreDisplay;
@@ -24,13 +24,21 @@ public class GameManager : MonoBehaviour
         try
         {
             rolls.Add(pinFall);
-            pinSetter.performAction(ActionMaster.NextAction(rolls));
-            
+
+            var actionToPerform = ActionMaster.NextAction(rolls);
+
+            if (actionToPerform == ActionMaster.Action.EndGame)
+            {
+                endGame();
+                return;
+            }
+
+            pinSetter.performAction(actionToPerform);
             ball.Reset();
         }
         catch (Exception)
         {
-            Debug.LogWarning("Something went wrong in Bowl");            
+            Debug.LogWarning("Something went wrong in Bowl");
         }
 
         try
@@ -38,9 +46,19 @@ public class GameManager : MonoBehaviour
             scoreDisplay.FillRolls(rolls);
             scoreDisplay.FillFrames(ScoreMaster.ScoreCumulative(rolls));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            Debug.LogWarning("Something went wrong in FillRolls");            
+            Debug.LogWarning("Something went wrong in FillRolls");
         }
-    } 
+    }
+
+    private void endGame()
+    {
+         
+    }
+
+    private void resetGame()
+    {
+        ball.Reset();       
+    }
 }

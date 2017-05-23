@@ -14,18 +14,8 @@ public class ScoreDisplay : MonoBehaviour
     {
         var scoreString = FormatRolls(rolls);
 
-        for (var i = 0; i < rolls.Count; i++)
-        {
-            if (rolls[i] == 10)
-            {
-                RollTexts[i].text = scoreString[i].ToString() + scoreString[i + 1];
-                i++;
-            }
-            else
-            {
-                RollTexts[i].text = scoreString[i].ToString();
-            }
-        }
+        for (var i = 0; i < scoreString.Length; i++)
+            RollTexts[i].text = scoreString[i].ToString();
     }
 
     //populates cumulative frame score on display

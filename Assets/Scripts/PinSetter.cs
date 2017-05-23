@@ -19,21 +19,18 @@ public class PinSetter : MonoBehaviour
     public void performAction(ActionMaster.Action action)
     {
         Debug.Log("Action: " + action);
+
         switch (action)
         {
             case ActionMaster.Action.Tidy:
                 animator.SetTrigger("tidyTrigger");
                 break;
             case ActionMaster.Action.Reset:
-                animator.SetTrigger("resetTrigger");
-                pinCounter.Reset();
-                break;
             case ActionMaster.Action.EndTurn:
+            case ActionMaster.Action.EndGame:
                 animator.SetTrigger("resetTrigger");
                 pinCounter.Reset();
                 break;
-            case ActionMaster.Action.EndGame:
-                throw new UnityException("don't know how to end game yet");
         }
     }
 
