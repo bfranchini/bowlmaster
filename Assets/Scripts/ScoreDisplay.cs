@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -56,6 +57,22 @@ public class ScoreDisplay : MonoBehaviour
         }
 
         return output;
+    }
+
+    public string GetFinalScore()
+    {
+        var score = FrameTexts.LastOrDefault(s => !string.IsNullOrEmpty(s.text));
+
+        return score == null ? "0" : score.text;
+    }
+
+    public void ResetScoreDisplay()
+    {
+        foreach (var text in  FrameTexts)        
+            text.text = "";
+        
+        foreach (var text in RollTexts)
+            text.text = "";
     }
 }
 

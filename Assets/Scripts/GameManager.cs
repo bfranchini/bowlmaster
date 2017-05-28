@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     private Ball ball;
     private PinSetter pinSetter;
     private ScoreDisplay scoreDisplay;
+    private GameObject promptsParent;
+    private Transform replayPrompt;
 
     // Use this for initialization
     void Start()
@@ -17,6 +19,19 @@ public class GameManager : MonoBehaviour
         pinSetter = FindObjectOfType<PinSetter>();
         ball = FindObjectOfType<Ball>();
         scoreDisplay = FindObjectOfType<ScoreDisplay>();
+
+        promptsParent = GameObject.Find("Prompts");
+
+        if (!promptsParent)
+        {
+            Debug.LogError("Could not find prompts parent object!");
+            return;
+        }
+
+        replayPrompt = promptsParent.transform.Find("ReplayPrompt");
+
+        if (!replayPrompt)
+            Debug.LogError("Could not find a replay prompt!");
     }
 
     public void Bowl(int pinFall)
@@ -29,7 +44,7 @@ public class GameManager : MonoBehaviour
 
             if (actionToPerform == ActionMaster.Action.EndGame)
             {
-                endGame();
+                EndGame();
                 return;
             }
 
@@ -48,17 +63,28 @@ public class GameManager : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.LogWarning("Something went wrong in FillRolls");
+            Debug.LogWarning("Something went wrong in FillRolls: " + ex.Message);
         }
     }
 
-    private void endGame()
+    public void EndGame()
     {
-         
+        replayPrompt.gameObject.SetActive(true);
+
+        var finalScoreText = GameObject.Find("FinalScore");
+
+        if (!finalScoreText)
+            Debug.LogError("Could not find Final Score Text");
+
+        finalScoreText.GetComponent<Text>().text = scoreDisplay.GetFinalScore();
     }
 
-    private void resetGame()
+    public void ResetGame()
     {
-        ball.Reset();       
+        replayPrompt.gameObject.SetActive(false);
+        rolls = new List<int>();
+        scoreDisplay.ResetScoreDisplay();
+        pinSetter.performAction(ActionMaster.Action.Reset);
+        ball.Reset();
     }
 }
