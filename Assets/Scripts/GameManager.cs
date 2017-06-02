@@ -32,10 +32,21 @@ public class GameManager : MonoBehaviour
 
         if (!replayPrompt)
             Debug.LogError("Could not find a replay prompt!");
+        
+        /////////////Test code///////////////
+        //var testScores = new List<int> { 10, 10, 10, 10, 9, 0, 10, 10, 10, 10, 10, 9, 1 };
+
+        //foreach (var testScore in testScores)
+        //{
+        //    Bowl(testScore);
+        //}
+        /////////////Test code///////////////
     }
 
     public void Bowl(int pinFall)
     {
+        var endGame = false;
+
         try
         {
             rolls.Add(pinFall);
@@ -43,10 +54,7 @@ public class GameManager : MonoBehaviour
             var actionToPerform = ActionMaster.NextAction(rolls);
 
             if (actionToPerform == ActionMaster.Action.EndGame)
-            {
-                EndGame();
-                return;
-            }
+                endGame = true;
 
             pinSetter.performAction(actionToPerform);
             ball.Reset();
@@ -60,6 +68,9 @@ public class GameManager : MonoBehaviour
         {
             scoreDisplay.FillRolls(rolls);
             scoreDisplay.FillFrames(ScoreMaster.ScoreCumulative(rolls));
+
+            if (endGame)                            
+                EndGame();                         
         }
         catch (Exception ex)
         {
