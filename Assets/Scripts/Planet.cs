@@ -16,6 +16,7 @@ public class Planet : MonoBehaviour {
 	{
 	    var yRotation = rigidBody.rotation.eulerAngles.y;
         
-	    rigidBody.rotation = Quaternion.Euler(0, yRotation + 1 * Time.deltaTime, 0);
+        //rotate planet at a rate of 1 degree per second
+	    rigidBody.rotation = Quaternion.Euler(0, yRotation + Time.deltaTime, 0);
 	}
 }
