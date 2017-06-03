@@ -7,9 +7,10 @@ public class Ball : MonoBehaviour
     private Rigidbody rigidBody;
     private AudioSource audioSource;
     private Vector3 initialPos;
+    private PinSetter pinSetter;
     public bool InPlay;
-    public float secondsInPlay;
-    
+    public float secondsInPlay;    
+
     //Ben's Code for nudge buttons
     //public bool inPlay = false;
 
@@ -19,6 +20,7 @@ public class Ball : MonoBehaviour
 	    initialPos = transform.position;
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+	    pinSetter = FindObjectOfType<PinSetter>();
 	    rigidBody.useGravity = false;
 	}
 
@@ -32,7 +34,16 @@ public class Ball : MonoBehaviour
 
     public void Launch(Vector3 velocity)
     {
-        if (!InPlay)
+        var animator = pinSetter.gameObject.GetComponent<Animator>();
+        var currentStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        //is there really no easier way to check if an animation is playing?
+        if (!InPlay &&
+           !currentStateInfo.IsName("Tidy.Raise") &&
+           !currentStateInfo.IsName("Tidy.Swipe") &&
+           !currentStateInfo.IsName("Tidy.Lower") &&
+           !currentStateInfo.IsName("Reset.Renew") &&
+           !currentStateInfo.IsName("Reset.Swipe"))
         {
             rigidBody.useGravity = true;
             rigidBody.velocity = velocity;

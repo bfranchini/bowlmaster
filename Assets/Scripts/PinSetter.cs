@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PinSetter : MonoBehaviour
 {    
-    public GameObject pinSet;                 
+    public GameObject pinSet;    
     private Animator animator;
     private PinCounter pinCounter;
 
@@ -36,10 +36,8 @@ public class PinSetter : MonoBehaviour
 
     public void RaisePins()
     {
-        foreach (Pin pin in FindObjectsOfType<Pin>())
-        {
-            pin.RaiseIfStanding();            
-        }            
+        foreach (Pin pin in FindObjectsOfType<Pin>())        
+            pin.RaiseIfStanding();                                
     }
 
     public void LowerPins()

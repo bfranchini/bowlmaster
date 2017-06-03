@@ -17,15 +17,6 @@ public class DragLaunch : MonoBehaviour
 	    ball = GetComponent<Ball>();
 	}
 
-    //Ben's Code for nudge buttons
-    //public void MoveStart(float amount)
-    //{
-    //    if(!ball.inPlay)
-    //    {
-    //        ball.transform.Translate(new Vector3(amount, 0,0));
-    //    }
-    //}
-
     public void DragStart()
     {
         //capture time & position of drag start
