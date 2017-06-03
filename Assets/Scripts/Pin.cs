@@ -19,7 +19,8 @@ public class Pin : MonoBehaviour
 
     void Awake()
     {
-        this.GetComponent<Rigidbody>().solverVelocityIterations = 10;
+        //fix for wobbly pins
+        this.GetComponent<Rigidbody>().solverVelocityIterations = 23;
     }
 
     // Update is called once per frame
