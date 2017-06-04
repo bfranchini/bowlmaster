@@ -7,7 +7,7 @@ public class PinCounter : MonoBehaviour {
     public Text standingDisplay;
     public bool ballOutOfPlay = false;
     private int lastSettledCount = 10;
-    private float maxSecondsInPlay = 30f;
+    private float maxSecondsInPlay = 20f;
     private int lastStandingCount = -1;
     private float lastChangeTime;
     private GameManager gameManager;
